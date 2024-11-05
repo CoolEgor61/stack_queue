@@ -36,7 +36,7 @@ TEST(mQueue2Stacks, can_push_element)
 {
     mQueue2Stacks<int> qs;
     qs.push(1);
-    EXPECT_EQ(1, qs.top());
+    EXPECT_EQ(1, qs.front());
 }
 
 TEST(mQueue2Stacks, can_pop_element)

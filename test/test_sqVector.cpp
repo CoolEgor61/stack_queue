@@ -75,12 +75,21 @@ TEST(sqVector, can_check_for_empty)
     EXPECT_EQ(1, v.isEmpty());
 }
 
-TEST(sqVector, can_check_for_full)
+TEST(sqVector, can_check_for_full1)
 {
     int *a = new int[5] {1,2,3,4,5};
     sqVector<int> v(a,5);
     delete[] a;
     EXPECT_NE(1, v.isFull());
+}
+
+TEST(sqVector, can_check_for_full2)
+{
+    int* a = new int[5] {1, 2, 3, 4, 5};
+    sqVector<int> v(a, 5);
+    delete[] a;
+    v.push_back(1);  v.push_back(1);  v.push_back(1);  v.push_back(1);  v.push_back(1);  v.push_back(1);
+    EXPECT_EQ(1, v.isFull());
 }
 
 TEST(sqVector, can_compare_equal_sqVectors_with_equal_size)
@@ -121,12 +130,12 @@ TEST(sqVector, can_get_element_with_positive_index)
     EXPECT_EQ(2, v[1]);
 }
 
-TEST(sqVector, can_get_top_element)
+TEST(sqVector, can_get_back_element)
 {
     int *a = new int[5] {1,2,3,4,5};
     sqVector<int> v(a,5);
     delete[] a;
-    EXPECT_EQ(5, v.top());
+    EXPECT_EQ(5, v.back());
 }
 
 TEST(sqVector, can_push_back_element)
@@ -138,6 +147,18 @@ TEST(sqVector, can_push_back_element)
     sqVector<int> v1(b,6);
     delete[] b;
     v.push_back(6);
+    EXPECT_EQ(v, v1);
+}
+
+TEST(sqVector, can_push_back_element_with_resize)
+{
+    int* a = new int[5] {1, 2, 3, 4, 5};
+    sqVector<int> v(a, 5);
+    delete[] a;
+    int* b = new int[13] {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13};
+    sqVector<int> v1(b, 13);
+    delete[] b;
+    for (std::size_t i=6;i<14;i++) v.push_back(i);
     EXPECT_EQ(v, v1);
 }
 
@@ -153,6 +174,18 @@ TEST(sqVector, can_push_front_element)
     EXPECT_EQ(v, v1);
 }
 
+TEST(sqVector, can_push_front_element_with_resize)
+{
+    int* a = new int[5] {1, 2, 3, 4, 5};
+    sqVector<int> v(a, 5);
+    delete[] a;
+    int* b = new int[13] {6, 7, 8, 9, 10, 11, 12, 13, 1, 2, 3, 4, 5};
+    sqVector<int> v1(b, 13);
+    delete[] b;
+    v.push_front(13); v.push_front(12); v.push_front(11); v.push_front(10); v.push_front(9); v.push_front(8); v.push_front(7); v.push_front(6);
+    EXPECT_EQ(v, v1);
+}
+
 TEST(sqVector, can_pop_back_element)
 {
     int *a = new int[5] {1,2,3,4,5};
@@ -163,6 +196,12 @@ TEST(sqVector, can_pop_back_element)
     delete[] b;
     v.pop_back();
     EXPECT_EQ(v, v1);
+}
+
+TEST(sqVector, cant_pop_back_element_empty_sqVector)
+{
+    sqVector<int> v;
+    ASSERT_ANY_THROW(v.pop_back());
 }
 
 TEST(sqVector, can_pop_front_element)
@@ -177,6 +216,12 @@ TEST(sqVector, can_pop_front_element)
     EXPECT_EQ(v, v1);
 }
 
+TEST(sqVector, cant_pop_front_element_empty_sqVector)
+{
+    sqVector<int> v;
+    ASSERT_ANY_THROW(v.pop_front());
+}
+
 TEST(sqVector, can_insert_element)
 {
     int *a = new int[5] {1,2,3,4,5};
@@ -186,6 +231,17 @@ TEST(sqVector, can_insert_element)
     sqVector<int> v1(b,6);
     delete[] b;
     v.insert(7,3);
+    EXPECT_EQ(v, v1);
+}
+TEST(sqVector, can_insert_element_with_resize)
+{
+    int* a = new int[5] {1, 2, 3, 4, 5};
+    sqVector<int> v(a, 5);
+    delete[] a;
+    int* b = new int[13] {1, 2, 3, 7, 8, 9, 10, 11, 12, 13, 14, 4, 5};
+    sqVector<int> v1(b, 13);
+    delete[] b;
+    for (std::size_t i=14;i>=7;i--) v.insert(i, 3);
     EXPECT_EQ(v, v1);
 }
 
@@ -199,4 +255,10 @@ TEST(sqVector, can_erase_element)
     delete[] b;
     v.erase(2);
     EXPECT_EQ(v, v1);
+}
+
+TEST(sqVector, cant_erase_element_empty_sqVector)
+{
+    sqVector<int> v;
+    ASSERT_ANY_THROW(v.erase(1));
 }

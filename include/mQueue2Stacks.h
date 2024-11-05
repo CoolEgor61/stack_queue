@@ -36,7 +36,7 @@ public:
         }
         size--;
     }
-    T top()
+    T back()
     {
         if (!data[1].isEmpty()) {
             T mem = {};
@@ -46,7 +46,23 @@ public:
             }
             return mem;
         }
-        return data[0].top();
+        if (!data[0].isEmpty())
+            return data[0].top();
+        else return 0;
+    }
+    T front()
+    {
+        if (!data[0].isEmpty()) {
+            T mem = {};
+            while (!data[0].isEmpty()) {
+                mem = data[0].top();
+                data[0].pop();
+            }
+            return mem;
+        }
+        if (!data[1].isEmpty())
+            return data[1].top();
+        else return 0;
     }
 };
 

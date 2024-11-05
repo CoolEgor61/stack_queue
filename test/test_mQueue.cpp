@@ -43,7 +43,7 @@ TEST(mQueue, can_pop_element)
 {
     mQueue<int> s;
     s.push(6);
-    s.push(6);
+    s.push(9);
     s.pop();
     EXPECT_EQ(1, s.size_());
 }
@@ -52,7 +52,7 @@ TEST(mQueue, can_get_front_element)
 {
     mQueue<int> s;
     s.push(6);
-    s.push(6);
+    s.push(9);
     EXPECT_EQ(6, s.get_front());
 }
 
@@ -60,6 +60,19 @@ TEST(mQueue, can_get_back_element)
 {
     mQueue<int> s;
     s.push(6);
+    s.push(9);
+    EXPECT_EQ(9, s.get_back());
+}
+
+TEST(mQueue, can_move_back_element_before_front)
+{
+    mQueue<int> s;
     s.push(6);
-    EXPECT_EQ(6, s.get_back());
+    s.push(9);
+    s.pop();
+    s.push(12);
+    s.push(13);
+    s.push(14);
+    s.push(15);
+    EXPECT_EQ(0, s.get_back_ind());
 }

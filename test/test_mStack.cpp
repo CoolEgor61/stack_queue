@@ -12,10 +12,17 @@ TEST(mStack, can_check_for_empty)
     EXPECT_EQ(1, s.isEmpty());
 }
 
-TEST(mStack, can_check_for_full)
+TEST(mStack, can_check_for_full1)
 {
     mStack<int> s;
     EXPECT_NE(1, s.isFull());
+}
+
+TEST(mStack, can_check_for_full2)
+{
+    mStack<int> s;
+    s.push(1);
+    EXPECT_EQ(1, s.isFull());
 }
 
 TEST(mStack, can_return_correct_size)
@@ -43,7 +50,7 @@ TEST(mStack, can_pop_element)
 {
     mStack<int> s;
     s.push(6);
-    s.push(6);
+    s.push(21);
     s.pop();
     EXPECT_EQ(1, s.size_());
 }

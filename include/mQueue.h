@@ -18,13 +18,14 @@ public:
     using sqVector<T>::isEmpty;
     using sqVector<T>::size_;
     using sqVector<T>::capacity_;
+    using sqVector<T>::resize;
     // methods
     void push(T elem)
     {
         if (!this->isFull()){
             data[back]=elem;
             size++;
-            if (back==front+size) back=0;
+            if (back==capacity-1) back=0;
             else back++;
         }
         else {
@@ -40,18 +41,6 @@ public:
             size--;
         }
     }
-    void resize(int new_size)
-    {
-        T* mem = new T[new_size * 2 + 2];
-        if (mem != 0) {
-            std::copy(data, data + capacity, mem);
-            delete[] data;
-            size = new_size;
-            capacity = new_size * 2 + 2;
-            data = mem;
-            mem = nullptr;
-        }
-    }
     T get_front()
     {
         return data[front];
@@ -60,6 +49,10 @@ public:
     {
         if (back==0) return data[capacity];
         else return data[back-1];
+    }
+    T get_back_ind()
+    {
+        return back;
     }
 };
 

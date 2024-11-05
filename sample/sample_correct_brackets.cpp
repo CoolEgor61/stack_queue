@@ -23,6 +23,7 @@ int checkCorrectBrackets(std::string s)
         if (s[i] == '(' || s[i] == '{' || s[i] == '[') t.push(s[i]);
         if (s[i] == ')' || s[i] == '}' || s[i] == ']')
             if (!t.empty() && s[i] == Biection(t.top())) t.pop();
+            else return 0;
     }
     if (!t.empty()) return 0;
     return 1;
@@ -57,6 +58,7 @@ int checkCorrectBrackets(std::string s)
         if (s[i] == '(' || s[i] == '{' || s[i] == '[') t.push(s[i]);
         if (s[i] == ')' || s[i] == '}' || s[i] == ']')
             if (!t.isEmpty() && s[i] == Biection(t.top())) t.pop();
+            else return 0;
     }
     if (!t.isEmpty()) return 0;
     return 1;
@@ -65,8 +67,9 @@ int checkCorrectBrackets(std::string s)
 int main()
 {
     std::string s = "5*(8+3)-2/(6-4+(-2-6))";
-    std::cout << "Expression with correct brackets: " << s << std::endl;
-    std::cout << "Is it correct? " << checkCorrectBrackets(s) << std::endl;
+    std::string s1 = "())";
+    std::cout << "Expression with correct brackets: " << s1 << std::endl;
+    std::cout << "Is it correct? " << checkCorrectBrackets(s1) << std::endl;
 }
 
 #endif

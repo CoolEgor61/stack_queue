@@ -18,31 +18,22 @@ public:
     using sqVector<T>::size_;
     using sqVector<T>::capacity_;
     using sqVector<T>::pop_back;
+    using sqVector<T>::resize;
+    using sqVector<T>::push_back;
+    using sqVector<T>::back;
     // methods
     void push(T elem)
     {
-        if (!(this->isFull())) data[++size]=elem;
-        else {
-            this->resize(size_t(size_t((int)size+1)));
-            data[size]=elem;
-        }
+        this->push_back(elem);
     }
-    void resize(int new_size)
+    void pop()
     {
-        T* mem=new T[new_size*2+2];
-        if (mem!=0){
-            std::copy(data,data+capacity,mem);
-            delete[] data;
-            size=new_size;
-            capacity = new_size * 2 + 2;
-            data=mem;
-            mem = nullptr;
-        }
-    }
-    void pop(){
         this->pop_back();
     }
-    T top() { if (!(this->isEmpty())) return data[size]; else return 0; };
+    T top()
+    { 
+        return this->back();
+    }
 };
 
 #endif 

@@ -32,7 +32,7 @@ TEST(sqVector, can_create_sqVector_copy)
     EXPECT_EQ(v, v1);
 }
 
-TEST(sqVector, can_assign_sqVectors_with_equal_size)
+TEST(sqVector, can_assign_sqVector)
 {
     int *a = new int[5] {1,2,3,4,5};
     sqVector<int> v(a,5);

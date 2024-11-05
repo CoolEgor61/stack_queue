@@ -27,7 +27,7 @@ public:
     sqVector(const sqVector& t) : size(t.size), capacity(t.capacity)
     {
         data = new T[capacity];
-        if (data==nullptr) throw std::bad_alloc(); else std::copy(t.data, t.data+t.size, data);
+        if (data==nullptr) throw std::bad_alloc(); else std::copy(t.data, t.data+t.size+1, data);
     }
     
     sqVector(const sqVector&& t) noexcept
@@ -47,15 +47,17 @@ public:
         if (&v==this) return *this;
         if (size != v.size)
         {
-            T* p = new T[v.size];
+            T* p = new T[v.capacity];
             if (p == nullptr) throw std::bad_alloc();
             else {
-            delete[] data;
-            data = p;
-            size = v.size;
+                delete[] data; data = nullptr;
+                data = p;
+                size = v.size;
+                capacity = v.capacity;
+                p = nullptr;
             }
         }
-        std::copy(v.data,v.data+v.size,data);
+        std::copy(v.data,v.data+v.size+1,data);
         return *this;
     }
     
@@ -82,7 +84,7 @@ public:
     bool operator==(const sqVector &t) const noexcept
     {
         if (size!=t.size) return 0;
-        else for (std::size_t i=0;i<size;i++)
+        else for (std::size_t i=1;i<size+1;i++)
             if (data[i]!=t.data[i]) return 0;
         return 1;
     }
@@ -139,13 +141,13 @@ public:
         ind += 1;
         if(!(this->isFull()))
         {
-            for (std::size_t i=size;i>ind;i--)
+            for (std::size_t i=size+1;i>ind;i--)
                 data[i]=data[i-1];
             data[ind]=elem; size++;
         }
         else {
             this->resize(size_t(size_t((int)size + 1)));
-            for (std::size_t i = size; i > ind; i--)
+            for (std::size_t i = size+1; i > ind; i--)
                 data[i] = data[i - 1];
             data[ind] = elem;
         }
@@ -155,7 +157,7 @@ public:
         ind += 1;
         if (!(this->isEmpty()))
         {
-            for (std::size_t i=ind; i<size-1;i++)
+            for (std::size_t i=ind; i<size+1;i++)
                 data[i]=data[i+1];
             size--;
         }

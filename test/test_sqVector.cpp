@@ -69,9 +69,17 @@ TEST(sqVector, can_return_correct_capacity)
     EXPECT_EQ(5*2+2, v.capacity_());
 }
 
-TEST(sqVector, can_check_for_empty)
+TEST(sqVector, can_check_for_empty1)
 {
     sqVector<int> v;
+    EXPECT_EQ(1, v.isEmpty());
+}
+
+TEST(sqVector, can_check_for_empty2)
+{
+    sqVector<int> v;
+    v.push_back(1);
+    v.pop_back();
     EXPECT_EQ(1, v.isEmpty());
 }
 
@@ -88,7 +96,13 @@ TEST(sqVector, can_check_for_full2)
     int* a = new int[5] {1, 2, 3, 4, 5};
     sqVector<int> v(a, 5);
     delete[] a;
-    v.push_back(1);  v.push_back(1);  v.push_back(1);  v.push_back(1);  v.push_back(1);  v.push_back(1);
+    v.push_back(1);
+    v.push_back(1);
+    v.push_back(1);
+    v.push_back(1);  
+    v.push_back(1);
+    v.push_back(1);
+    v.push_back(1);
     EXPECT_EQ(1, v.isFull());
 }
 
@@ -182,7 +196,14 @@ TEST(sqVector, can_push_front_element_with_resize)
     int* b = new int[13] {6, 7, 8, 9, 10, 11, 12, 13, 1, 2, 3, 4, 5};
     sqVector<int> v1(b, 13);
     delete[] b;
-    v.push_front(13); v.push_front(12); v.push_front(11); v.push_front(10); v.push_front(9); v.push_front(8); v.push_front(7); v.push_front(6);
+    v.push_front(13); 
+    v.push_front(12);
+    v.push_front(11);
+    v.push_front(10);
+    v.push_front(9);
+    v.push_front(8);
+    v.push_front(7);
+    v.push_front(6);
     EXPECT_EQ(v, v1);
 }
 

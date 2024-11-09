@@ -9,6 +9,10 @@ template<typename T> class mStack: private sqVector<T>
     using sqVector<T>::size;
     using sqVector<T>::capacity;
     using sqVector<T>::data;
+    // inheritage
+    using sqVector<T>::pop_back;
+    using sqVector<T>::push_back;
+    using sqVector<T>::back;
 public:
     // constuctor
     mStack() : sqVector<T>(0) {}
@@ -17,10 +21,8 @@ public:
     using sqVector<T>::isEmpty;
     using sqVector<T>::size_;
     using sqVector<T>::capacity_;
-    using sqVector<T>::pop_back;
     using sqVector<T>::resize;
-    using sqVector<T>::push_back;
-    using sqVector<T>::back;
+    using sqVector<T>::operator[];
     // methods
     void push(T elem)
     {

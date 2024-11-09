@@ -38,30 +38,18 @@ public:
     }
     T back()
     {
-        if (!data[1].isEmpty()) {
-            T mem = {};
-            while (!data[1].isEmpty()) {
-                mem=data[1].top();
-                data[1].pop();
-            }
-            return mem;
-        }
+        if (!data[1].isEmpty())
+            return data[1][0];
         if (!data[0].isEmpty())
-            return data[0].top();
+            return data[0][size];
         else return 0;
     }
     T front()
     {
-        if (!data[0].isEmpty()) {
-            T mem = {};
-            while (!data[0].isEmpty()) {
-                mem = data[0].top();
-                data[0].pop();
-            }
-            return mem;
-        }
         if (!data[1].isEmpty())
-            return data[1].top();
+            return data[1][size];
+        if (!data[0].isEmpty())
+            return data[0][0];
         else return 0;
     }
 };

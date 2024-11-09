@@ -6,7 +6,7 @@ TEST(mStack, can_create_mStack)
     ASSERT_NO_THROW(mStack<int> s);
 }
 
-TEST(mStack, can_check_for_empty)
+TEST(mStack, can_check_for_empty1)
 {
     mStack<int> s;
     EXPECT_EQ(1, s.isEmpty());
@@ -22,6 +22,7 @@ TEST(mStack, can_check_for_full2)
 {
     mStack<int> s;
     s.push(1);
+    s.push(1);
     EXPECT_EQ(1, s.isFull());
 }
 
@@ -35,8 +36,9 @@ TEST(mStack, can_return_correct_size)
 TEST(mStack, can_return_correct_capacity)
 {
     mStack<int> s;
-    s.push(1); s.push(1); s.push(1); s.push(1); s.push(1);
-    EXPECT_EQ(2*2+2, s.capacity_());
+    int capacity = s.size_() * 2 + 2;
+    s.push(1);
+    EXPECT_EQ(capacity, s.capacity_());
 }
 
 TEST(mStack, can_push_element)
@@ -59,10 +61,10 @@ TEST(mStack, can_resize_stack)
 {
     mStack<int> s;
     s.resize(8);
-    EXPECT_EQ(8, s.size_());
+    EXPECT_EQ(8*2+2, s.capacity_());
 }
 
-TEST(mStack, can_get_top_element)
+TEST(mStack, can_get_top_element_1)
 {
     mStack<int> s;
     s.push(6);
@@ -70,10 +72,21 @@ TEST(mStack, can_get_top_element)
     EXPECT_EQ(7, s.top());
 }
 
+TEST(mStack, can_get_correct_top_2)
+{
+    mStack<int> s;
+    s.push(1);
+    s.push(2);
+    s.pop();
+    EXPECT_EQ(1, s.top());
+}
+
 TEST(mStack, can_resize_stack_while_pushing_elemets)
 {
     mStack<int> s;
     s.push(6);
     s.push(7);
-    EXPECT_EQ(6, s.capacity_());
+    int capacity = (s.size_()+1) * 2 + 2;
+    s.push(1);
+    EXPECT_EQ(capacity, s.capacity_());
 }

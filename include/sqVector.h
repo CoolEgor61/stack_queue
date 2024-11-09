@@ -21,13 +21,13 @@ public:
     sqVector(T* arr, std::size_t sz) : size(sz), capacity(sz*2+2)
     {
         data = new T[capacity];
-        if (data==nullptr) throw std::bad_alloc(); else std::copy(arr, arr+sz, data+1);
+        if (data==nullptr) throw std::bad_alloc(); else std::copy(arr, arr+sz, data);
     }
     
     sqVector(const sqVector& t) : size(t.size), capacity(t.capacity)
     {
         data = new T[capacity];
-        if (data==nullptr) throw std::bad_alloc(); else std::copy(t.data, t.data+t.size+1, data);
+        if (data==nullptr) throw std::bad_alloc(); else std::copy(t.data, t.data+t.size, data);
     }
     
     sqVector(const sqVector&& t) noexcept
@@ -57,7 +57,7 @@ public:
                 p = nullptr;
             }
         }
-        std::copy(v.data,v.data+v.size+1,data);
+        std::copy(v.data,v.data+v.size,data);
         return *this;
     }
     
@@ -79,12 +79,12 @@ public:
     size_t size_() const noexcept { return size; };
     size_t capacity_() const noexcept { return capacity; };
     bool isEmpty() const noexcept { return (size==0); };
-    bool isFull() const noexcept { return (size==capacity-1); };
+    bool isFull() const noexcept { return (size==capacity); };
     // comparations
     bool operator==(const sqVector &t) const noexcept
     {
         if (size!=t.size) return 0;
-        else for (std::size_t i=1;i<size+1;i++)
+        else for (std::size_t i=0;i<size;i++)
             if (data[i]!=t.data[i]) return 0;
         return 1;
     }
@@ -95,21 +95,20 @@ public:
     // indexation
     T operator[](std::size_t ind)
     {
-        return data[ind+1];
+        return data[ind];
     }
     const T operator[](std::size_t ind) const
     {
-        return data[ind+1];
+        return data[ind];
     }
     // methods
-    T back() { if (!(this->isEmpty())) return data[size]; else throw std::logic_error("Vector is empty"); };
+    T back() { if (!(this->isEmpty())) return data[size-1]; else throw std::logic_error("Vector is empty"); };
     void resize(int new_size)
     {
         T* mem = new T[new_size * 2 + 2];
         if (mem != nullptr) {
             std::copy(data, data + capacity, mem);
             delete[] data;
-            size = new_size;
             capacity = new_size * 2 + 2;
             data = mem;
             mem = nullptr;
@@ -117,11 +116,7 @@ public:
     }
     void push_back(T elem)
     {
-        if (!(this->isFull())) data[++size] = elem;
-        else {
-            this->resize(size_t(size_t((int)size + 1)));
-            data[size] = elem;
-        }
+        insert(elem,size);
     }
     void push_front(T elem)
     {
@@ -129,8 +124,7 @@ public:
     }
     void pop_back()
     {
-        if (!(this->isEmpty())) size--;
-        else throw std::logic_error("Vector is empty!");
+        erase(size);
     }
     void pop_front()
     {
@@ -138,26 +132,15 @@ public:
     }
     void insert(T elem, std::size_t ind)
     {
-        ind += 1;
-        if(!(this->isFull()))
-        {
-            for (std::size_t i=size+1;i>ind;i--)
-                data[i]=data[i-1];
-            data[ind]=elem; size++;
-        }
-        else {
-            this->resize(size_t(size_t((int)size + 1)));
-            for (std::size_t i = size+1; i > ind; i--)
-                data[i] = data[i - 1];
-            data[ind] = elem;
-        }
+        if((this->isFull())) this->resize(size_t(size_t((int)size + 1)));
+        for (std::size_t i = size; i > ind; i--) data[i] = data[i - 1];
+        data[ind] = elem; size++;
     }
     void erase(std::size_t ind)
     {
-        ind += 1;
         if (!(this->isEmpty()))
         {
-            for (std::size_t i=ind; i<size+1;i++)
+            for (std::size_t i=ind; i<size;i++)
                 data[i]=data[i+1];
             size--;
         }

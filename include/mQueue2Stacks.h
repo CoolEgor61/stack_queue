@@ -14,8 +14,8 @@ public:
     // constructor
     mQueue2Stacks() : size(data[0].size_() + data[1].size_()), capacity(data[0].capacity_() + data[1].capacity_()) {}
     // methods
-    size_t size_() const noexcept { return data[0].size_() + data[1].size_(); };
-    size_t capacity_() const noexcept { return data[0].capacity_()+data[1].capacity_(); };
+    size_t size_() const noexcept { return size; };
+    size_t capacity_() const noexcept { return capacity; };
     bool isEmpty() const noexcept { return (data[0].isEmpty() && data[1].isEmpty()); };
     bool isFull() const noexcept { return (data[0].isFull() && data[1].isFull()); };
     void push(T elem)
@@ -25,15 +25,13 @@ public:
     }
     void pop()
     {
-        if(data[1].isEmpty()) {
+        if(data[1].isEmpty())
             while(!data[0].isEmpty()) {
                 T mem = data[0].top();
                 data[1].push(mem);
                 data[0].pop();
             }
-        } else {
-            data[1].pop();
-        }
+        data[1].pop();
         size--;
     }
     T back()

@@ -46,7 +46,7 @@ TEST(mQueue2Stacks, can_pop_element)
     qs.push(6);
     qs.push(6);
     qs.pop();
-    EXPECT_EQ(2, qs.size_());
+    EXPECT_EQ(1, qs.size_());
 }
 
 TEST(mQueue2Stacks, can_get_front_element)
